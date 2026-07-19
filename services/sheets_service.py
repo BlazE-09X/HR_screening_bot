@@ -48,3 +48,13 @@ class SheetsService:
             # Sheets — это "зеркало", а не основной источник данных.
             # Если запись сюда не удалась — кандидат всё равно уже в SQLite, ничего не потеряно.
             logger.exception(f"Не удалось записать кандидата {candidate.id} в Google Sheets")
+    
+    def clear_all(self) -> None:
+        """Удаляет все строки с данными, оставляя только заголовок."""
+        try:
+            self.sheet.clear()
+            self._ensure_headers()
+            logger.info("Google Sheets очищена")
+        except Exception:
+            logger.exception("Не удалось очистить Google Sheets")
+            raise

@@ -52,7 +52,7 @@ async def main() -> None:
     # 6. Регистрируем обработчики
     dp.include_router(register_candidate_handlers(repo, candidate_service))
     dp.include_router(register_recruiter_handlers(
-        search_service, recruiter_query_service, stats_service, settings.recruiter_ids
+        search_service, recruiter_query_service, stats_service, sheets_service, settings.recruiter_ids
     ))
 
     logger.info("Бот запускается...")

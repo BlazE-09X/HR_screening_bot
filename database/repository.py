@@ -152,3 +152,10 @@ class CandidateRepository:
                 f"SELECT * FROM candidates WHERE id IN ({placeholders})", ids
             ).fetchall()
             return [Candidate(**dict(row)) for row in rows]
+    
+    def clear_all_data(self) -> None:
+        """Полностью очищает таблицы кандидатов и ответов. Необратимо."""
+        with self._get_connection() as conn:
+            conn.execute("DELETE FROM answers")
+            conn.execute("DELETE FROM candidates")
+        logger.info("Данные кандидатов и ответов очищены")
