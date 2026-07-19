@@ -8,9 +8,9 @@ logger = logging.getLogger(__name__)
 
 
 class GeminiClient:
-    def __init__(self, api_key: str, model: str = "gemini-2.0-flash"):
+    def __init__(self, api_key: str, model: str = None):
         self.client = genai.Client(api_key=api_key)
-        self.model = model
+        self.model = model or "gemini-flash-latest"
 
     def analyze_candidate(self, prompt: str) -> CandidateAnalysis:
         """Отправляет промпт и возвращает строго типизированный результат."""

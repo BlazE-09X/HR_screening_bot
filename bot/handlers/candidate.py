@@ -8,12 +8,13 @@ from bot.states import QuestionnaireStates
 from config.questions import QUESTIONNAIRE
 from database.models import Candidate, Answer
 from database.repository import CandidateRepository
+from services.candidate_service import CandidateService
 
 logger = logging.getLogger(__name__)
 router = Router()
 
 
-def register_candidate_handlers(repo: CandidateRepository) -> Router:
+def register_candidate_handlers(repo: CandidateRepository, candidate_service: CandidateService) -> Router:
     """Регистрирует обработчики, передавая им repository через замыкание."""
 
     @router.message(CommandStart())
@@ -104,6 +105,5 @@ def register_candidate_handlers(repo: CandidateRepository) -> Router:
         await state.clear()
         logger.info(f"Кандидат {candidate_id} завершил анкету, запускается анализ")
 
-        # Здесь будет запуск AI-анализа (следующий шаг)
-        # await candidate_service.process_completed_candidate(candidate_id)
+        candidate_service.process_completed_candidate(candidate_id)
     return router
